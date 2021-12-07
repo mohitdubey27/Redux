@@ -3,7 +3,7 @@ import {
   REGISTER_ERROR,
   REGISTER_LOADING,
   REGISTER_SUCCESS,
-} from '../actionTypes/registerType';
+} from '../actionTypes';
 
 const registerReducer = (state = {}, action) => {
   switch (action.type) {

@@ -1,15 +1,12 @@
 import React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
 import {Provider} from 'react-redux';
-import AuthNavigation from './src/navigation/AuthNavigation';
 import store from './src/Redux/store';
+import Splash from './src/screens/Splash';
 
 const App = () => {
   return (
     <Provider store={store}>
-      <NavigationContainer>
-        <AuthNavigation />
-      </NavigationContainer>
+      <Splash />
     </Provider>
   );
 };

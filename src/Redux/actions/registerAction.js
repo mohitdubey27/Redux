@@ -5,7 +5,7 @@ import {
   REGISTER_ERROR,
   REGISTER_LOADING,
   REGISTER_SUCCESS,
-} from '../actionTypes/registerType';
+} from '../actionTypes';
 
 const registerAction = data => async dispatch => {
   dispatch({type: REGISTER_LOADING});

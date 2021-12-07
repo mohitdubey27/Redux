@@ -1,9 +1,5 @@
 import axiosRequest from '../../utils/axiosRequest';
-import {
-  LOGIN_ERROR,
-  LOGIN_LOADING,
-  LOGIN_SUCCESS,
-} from '../actionTypes/registerType';
+import {LOGIN_ERROR, LOGIN_LOADING, LOGIN_SUCCESS} from '../actionTypes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const loginAction = data => async dispatch => {

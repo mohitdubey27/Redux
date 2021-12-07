@@ -7,8 +7,8 @@ import Ionicon from 'react-native-vector-icons/Ionicons';
 import FoundationIcon from 'react-native-vector-icons/Foundation';
 import EvilIcon from 'react-native-vector-icons/EvilIcons';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
-import FAIcon from 'react-native-vector-icons/FontAwesome';
-import FAIcon5 from 'react-native-vector-icons/FontAwesome5';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import SimpleLineIcon from 'react-native-vector-icons/SimpleLineIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Feather from 'react-native-vector-icons/Feather';
@@ -35,9 +35,9 @@ const getIconFont = type => {
     case 'foundation':
       return FoundationIcon;
     case 'fa5':
-      return FAIcon5;
+      return FontAwesome5;
     case 'fa':
-      return FAIcon;
+      return FontAwesome;
     case 'ionicon':
       return Ionicon;
     case 'materialCommunity':
@@ -47,7 +47,7 @@ const getIconFont = type => {
     case 'octicon':
       return OcticonIcon;
     default:
-      return FAIcon;
+      return FontAwesome;
   }
 };
 

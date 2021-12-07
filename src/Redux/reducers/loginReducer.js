@@ -3,7 +3,7 @@ import {
   LOGIN_ERROR,
   LOGIN_LOADING,
   LOGIN_SUCCESS,
-} from '../actionTypes/registerType';
+} from '../actionTypes';
 
 const loginReducers = (state = {}, action) => {
   switch (action.type) {
