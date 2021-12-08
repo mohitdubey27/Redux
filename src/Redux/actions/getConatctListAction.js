@@ -9,10 +9,8 @@ const getContactListAction = () => async dispatch => {
   dispatch({type: GET_CONTACT_LOADING});
   try {
     const response = await axiosRequest.get('contacts/');
-    console.log('GET CONTACT RESPONSE==>', response);
     dispatch({type: GET_CONTACT_SUCCESS, payload: response});
   } catch (error) {
-    console.log('GET CONTACT ERROR===>', error);
     dispatch({type: GET_CONTACT_ERROR, payload: error.data});
   }
 };

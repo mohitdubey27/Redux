@@ -8,14 +8,12 @@ import {NavigationContainer} from '@react-navigation/native';
 const AuthNavigation = () => {
   const AuthStack = createNativeStackNavigator();
   return (
-    <NavigationContainer>
-      <AuthStack.Navigator
-        initialRouteName={Login}
-        screenOptions={{headerShown: false}}>
-        <AuthStack.Screen name={Login} component={LoginScreen} />
-        <AuthStack.Screen name={Register} component={RegisterScreen} />
-      </AuthStack.Navigator>
-    </NavigationContainer>
+    <AuthStack.Navigator
+      initialRouteName={Login}
+      screenOptions={{headerShown: false}}>
+      <AuthStack.Screen name={Login} component={LoginScreen} />
+      <AuthStack.Screen name={Register} component={RegisterScreen} />
+    </AuthStack.Navigator>
   );
 };
 

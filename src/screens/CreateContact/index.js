@@ -4,7 +4,7 @@ import colors from '../../assets/colors';
 import BackButton from '../../component/BackButton';
 import Icon from '../../component/Icons';
 import styles from './styles';
-import {useFocusEffect, useNavigation} from '@react-navigation/core';
+import {useFocusEffect, useNavigation, useRoute} from '@react-navigation/core';
 import InputField from '../../component/InputField';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import CountryPicker from 'react-native-country-picker-modal';
@@ -17,26 +17,35 @@ import {
   clearCreateContactAction,
   createContactAction,
 } from '../../Redux/actions/createContactAction';
+import getCountryCode from '../../utils/getCountryCode';
+import {
+  clearEditContactState,
+  editContactAction,
+} from '../../Redux/actions/editContactAction';
 
 const CreateContact = () => {
   const [countryCode, setCountryCode] = useState(null);
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  const routes = useRoute();
+  const from = routes.params?.from;
 
   const {createContactStatus, createContactResponse, error} = useSelector(
     state => state.createContactReducer,
   );
 
-  console.log('CREATE CONTACT==', {
-    createContactStatus,
-    createContactResponse,
-    error,
-  });
+  const {contactData, readContactError} = useSelector(
+    state => state.readContactReducer,
+  );
+
+  const {editContactStatus, editContactResponse, editContactError} =
+    useSelector(state => state.editContactReducer);
 
   useFocusEffect(
     useCallback(() => {
       return () => {
         dispatch(clearCreateContactAction());
+        dispatch(clearEditContactState());
       };
     }, [dispatch]),
   );
@@ -44,19 +53,30 @@ const CreateContact = () => {
   if (createContactStatus === 'loaded') {
     navigation.goBack(null);
   }
+  if (editContactStatus === 'loaded') {
+    navigation.goBack(null);
+  }
 
   const {values, errors, touched, handleChange, handleSubmit, setFieldValue} =
     useFormik({
       validationSchema: createContactSchema,
       initialValues: {
-        first_name: '',
-        last_name: '',
-        country_code: '',
-        phone_number: '',
-        is_favorite: false,
+        first_name: contactData?.first_name,
+        last_name: contactData?.last_name,
+        country_code: contactData?.country_code,
+        phone_number: contactData?.phone_number,
+        is_favorite: contactData?.is_favorite,
       },
       onSubmit: data => {
-        dispatch(createContactAction(data));
+        if (from === 'Edit') {
+          const sendData = {
+            ...data,
+            id: contactData.id,
+          };
+          dispatch(editContactAction(sendData));
+        } else {
+          dispatch(createContactAction(data));
+        }
       },
     });
 
@@ -67,7 +87,7 @@ const CreateContact = () => {
         <View style={styles.headerIcon}>
           <Icon
             size={80}
-            name="phone-plus"
+            name={from === 'Edit' ? 'account-edit' : 'phone-plus'}
             type="materialCommunity"
             color={colors.rebeccapurple}
           />
@@ -103,16 +123,20 @@ const CreateContact = () => {
             <TouchableOpacity style={styles.countryCode}>
               <CountryPicker
                 onSelect={value => {
-                  console.log('SELCETE===', value);
-                  const phoneCode = value.callingCode[0];
+                  const phoneCode =
+                    value.callingCode[0] || contactData?.country_code;
                   const cCode = value.cca2;
-                  setCountryCode(cCode);
+                  setCountryCode(cCode || contactData?.country_code);
                   setFieldValue('country_code', phoneCode);
                 }}
                 withFilter
                 withAlphaFilter
                 withCallingCode
-                countryCode={countryCode}
+                countryCode={
+                  countryCode ||
+                  (contactData?.country_code &&
+                    getCountryCode(`+${contactData?.country_code}`))
+                }
                 withCallingCodeButton
                 withFlagButton={false}
               />
@@ -154,10 +178,14 @@ const CreateContact = () => {
           </View>
         </View>
         <View style={styles.addContactButtonView}>
-          <Button title="Add Contact" onPress={handleSubmit} />
+          <Button
+            title={from == 'Edit' ? 'Edit Contact' : 'Add Contact'}
+            onPress={handleSubmit}
+          />
         </View>
       </KeyboardAwareScrollView>
-      {createContactStatus === 'loading' && <Loader />}
+      {(createContactStatus === 'loading' ||
+        editContactStatus === 'loading') && <Loader />}
     </SafeAreaView>
   );
 };

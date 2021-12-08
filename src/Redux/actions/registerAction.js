@@ -18,7 +18,6 @@ const registerAction = data => async dispatch => {
       password: data.Password,
     };
     const response = await axiosRequest.post('auth/register', sendData);
-    console.log('RESPONSE==>', response);
     dispatch({type: REGISTER_SUCCESS, payload: response});
   } catch (error) {
     dispatch({type: REGISTER_ERROR, payload: error.data});

@@ -49,11 +49,9 @@ const RegisterScreen = () => {
   );
 
   if (registerLoadingStatus === 'loaded') {
-    console.log('INSIDE IF');
     Toast.show('Your have registered successfully.');
     navigation.goBack(null);
   } else if (registerLoadingStatus === 'error') {
-    console.log('INSIDE ELSE IF');
     Toast.show('Server Error');
   }
 

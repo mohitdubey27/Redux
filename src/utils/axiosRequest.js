@@ -9,11 +9,9 @@ const axiosRequest = axios.create({
 //All response from axios
 axiosRequest.interceptors.response.use(
   response => {
-    console.log('Response=======>', response);
     return response.data;
   },
   error => {
-    console.log('Error=======>', error.response?.data);
     if (error.response) {
       if (error.response.status === 403) {
         //navigate(RouteName.LOGOUT, { tokenExpired: true });
@@ -34,7 +32,6 @@ axiosRequest.interceptors.request.use(
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
-    console.log('CONFIG===', config);
     return config;
   },
   error => {

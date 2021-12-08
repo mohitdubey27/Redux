@@ -12,6 +12,7 @@ import {LoginSchema} from '../../utils/validation';
 import {useDispatch, useSelector} from 'react-redux';
 import loginAction from '../../Redux/actions/loginAction';
 import Loader from '../../component/Loader';
+import ContactsNavigation from '../../navigation/ContactsNavigation';
 
 const LoginScreen = () => {
   const navigation = useNavigation();
@@ -28,6 +29,10 @@ const LoginScreen = () => {
       dispatch(loginAction(data));
     },
   });
+
+  if (loginLoadingStatus === 'loaded') {
+    return <ContactsNavigation />;
+  }
 
   return (
     <SafeAreaView style={styles.container}>

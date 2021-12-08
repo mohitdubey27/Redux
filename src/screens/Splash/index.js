@@ -6,6 +6,7 @@ import styles from './styles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ContactsNavigation from '../../navigation/ContactsNavigation';
 import AuthNavigation from '../../navigation/AuthNavigation';
+import {NavigationContainer} from '@react-navigation/native';
 
 const height = Dimensions.get('window').height;
 
@@ -27,11 +28,9 @@ const Splash = () => {
   }, []);
 
   return isWait ? (
-    isAuthorize ? (
-      <ContactsNavigation />
-    ) : (
-      <AuthNavigation />
-    )
+    <NavigationContainer>
+      {isAuthorize ? <ContactsNavigation /> : <AuthNavigation />}
+    </NavigationContainer>
   ) : (
     <View style={styles.container}>
       <Icon
