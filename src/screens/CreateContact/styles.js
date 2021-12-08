@@ -27,4 +27,17 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  favoriteView: {
+    marginHorizontal: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  isFavoriteText: {
+    fontSize: 17,
+    fontWeight: '500',
+    marginLeft: 10,
+  },
+  addContactButtonView: {
+    marginVertical: 25,
+  },
 });

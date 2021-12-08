@@ -1,5 +1,5 @@
-import {useNavigation} from '@react-navigation/core';
-import React from 'react';
+import {useFocusEffect, useNavigation} from '@react-navigation/core';
+import React, {useCallback} from 'react';
 import {
   SafeAreaView,
   View,
@@ -7,49 +7,36 @@ import {
   FlatList,
   TouchableOpacity,
 } from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
 import colors from '../../assets/colors';
 import Icon from '../../component/Icons';
-import {AddContacts} from '../../constants/RoutesName';
+import Loader from '../../component/Loader';
+import {AddContacts, EditContact} from '../../constants/RoutesName';
+import getContactListAction from '../../Redux/actions/getConatctListAction';
 import styles from './styles';
-
-const data = [
-  {
-    name: 'Mohit Dubey',
-    number: '8299187732',
-    countryCode: '+91',
-  },
-  {
-    name: 'Mohit Dubey',
-    number: '8299187732',
-    countryCode: '+91',
-  },
-  {
-    name: 'Mohit Dubey',
-    number: '8299187732',
-    countryCode: '+91',
-  },
-  {
-    name: 'Mohit Dubey',
-    number: '8299187732',
-    countryCode: '+91',
-  },
-  {
-    name: 'Mohit Dubey',
-    number: '8299187732',
-    countryCode: '+91',
-  },
-];
 
 const Contacts = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+
+  const {getContactStatus, contactList, error} = useSelector(
+    state => state.getContactListReduder,
+  );
+
+  useFocusEffect(
+    useCallback(() => {
+      dispatch(getContactListAction());
+    }, [dispatch]),
+  );
+
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.headerTitle}>Contacts</Text>
       <View style={styles.HeaderSeperator} />
       <View style={{flex: 1}}>
-        {data.length > 0 ? (
+        {contactList.length > 0 ? (
           <FlatList
-            data={data}
+            data={contactList}
             renderItem={({item}) => (
               <View style={styles.contactContainer}>
                 <TouchableOpacity style={styles.contactButton}>
@@ -60,14 +47,19 @@ const Contacts = () => {
                     color={colors.rebeccapurple}
                   />
                   <View>
-                    <Text style={styles.name}>{item.name}</Text>
+                    <Text style={styles.name}>
+                      {item.first_name} {item.last_name}
+                    </Text>
                     <Text style={styles.number}>
-                      {item.countryCode} {item.number}
+                      +{item.country_code} {item.phone_number}
                     </Text>
                   </View>
                 </TouchableOpacity>
                 <View style={styles.contactButton}>
-                  <TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() =>
+                      navigation.navigate(AddContacts, {from: 'Edit'})
+                    }>
                     <Icon
                       name="account-edit"
                       type="materialCommunity"
@@ -107,6 +99,7 @@ const Contacts = () => {
           color={colors.rebeccapurple}
         />
       </TouchableOpacity>
+      {getContactStatus === 'loading' && <Loader />}
     </SafeAreaView>
   );
 };

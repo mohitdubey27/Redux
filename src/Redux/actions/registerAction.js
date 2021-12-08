@@ -1,4 +1,3 @@
-import axios from 'axios';
 import axiosRequest from '../../utils/axiosRequest';
 import {
   CLEAR_REGISTER_STATE,

@@ -30,7 +30,7 @@ axiosRequest.interceptors.response.use(
 // All request from axios
 axiosRequest.interceptors.request.use(
   async config => {
-    const token = await AsyncStorage.getItem('@token');
+    const token = await AsyncStorage.getItem('token');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }

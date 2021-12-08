@@ -27,4 +27,17 @@ const LoginSchema = Yup.object({
   password: Yup.string().required('Password is required.'),
 });
 
-export {RegisterSchema, LoginSchema};
+const createContactSchema = Yup.object({
+  first_name: Yup.string()
+    .required('Firstname is required')
+    .min(2, 'Firstname should be greater than 2 characters')
+    .max(15, 'Firstname should be less than 15 characters'),
+  last_name: Yup.string()
+    .required('Lastname is required')
+    .min(2, 'Lastname should be greater than 2 characters')
+    .max(15, 'Lastname should be less than 15 characters'),
+  country_code: Yup.string().required('Country code is required'),
+  phone_number: Yup.string().required('Phone number is required'),
+});
+
+export {RegisterSchema, LoginSchema, createContactSchema};

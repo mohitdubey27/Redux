@@ -34,9 +34,7 @@ const RegisterScreen = () => {
       Password: '',
     },
     onSubmit: (data, {resetForm}) => {
-      dispatch(registerAction(data)).then(res => {
-        console.log('RESPONSE', res);
-      });
+      dispatch(registerAction(data));
       resetForm();
     },
     validationSchema: RegisterSchema,
