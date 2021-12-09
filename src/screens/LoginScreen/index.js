@@ -12,7 +12,7 @@ import {LoginSchema} from '../../utils/validation';
 import {useDispatch, useSelector} from 'react-redux';
 import loginAction from '../../Redux/actions/loginAction';
 import Loader from '../../component/Loader';
-import ContactsNavigation from '../../navigation/ContactsNavigation';
+import DrawerNavigation from '../../navigation/DrawerNavigation';
 
 const LoginScreen = () => {
   const navigation = useNavigation();
@@ -31,7 +31,7 @@ const LoginScreen = () => {
   });
 
   if (loginLoadingStatus === 'loaded') {
-    return <ContactsNavigation />;
+    return <DrawerNavigation />;
   }
 
   return (

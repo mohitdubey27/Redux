@@ -4,7 +4,7 @@ import colors from '../../assets/colors';
 import Icon from '../../component/Icons';
 import styles from './styles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import ContactsNavigation from '../../navigation/ContactsNavigation';
+import DrawerNavigation from '../../navigation/DrawerNavigation';
 import AuthNavigation from '../../navigation/AuthNavigation';
 import {NavigationContainer} from '@react-navigation/native';
 
@@ -29,7 +29,7 @@ const Splash = () => {
 
   return isWait ? (
     <NavigationContainer>
-      {isAuthorize ? <ContactsNavigation /> : <AuthNavigation />}
+      {isAuthorize ? <DrawerNavigation /> : <AuthNavigation />}
     </NavigationContainer>
   ) : (
     <View style={styles.container}>
