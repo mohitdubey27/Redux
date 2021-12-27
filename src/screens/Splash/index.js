@@ -1,18 +1,24 @@
 import React, {useEffect, useState} from 'react';
-import {Dimensions, View} from 'react-native';
+import {Dimensions, View, useColorScheme} from 'react-native';
 import colors from '../../assets/colors';
 import Icon from '../../component/Icons';
 import styles from './styles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DrawerNavigation from '../../navigation/DrawerNavigation';
 import AuthNavigation from '../../navigation/AuthNavigation';
-import {NavigationContainer} from '@react-navigation/native';
+import {
+  NavigationContainer,
+  DefaultTheme,
+  DarkTheme,
+} from '@react-navigation/native';
 
 const height = Dimensions.get('window').height;
 
 const Splash = () => {
   const [isAuthorize, setIsAuthorize] = useState(false);
   const [isWait, setIsWait] = useState(false);
+  const scheme = useColorScheme();
+
   const checkUser = async () => {
     const token = await AsyncStorage.getItem('token');
     if (token) {
@@ -28,7 +34,7 @@ const Splash = () => {
   }, []);
 
   return isWait ? (
-    <NavigationContainer>
+    <NavigationContainer theme={scheme === 'dark' ? DarkTheme : DefaultTheme}>
       {isAuthorize ? <DrawerNavigation /> : <AuthNavigation />}
     </NavigationContainer>
   ) : (
